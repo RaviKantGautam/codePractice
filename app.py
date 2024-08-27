@@ -2,6 +2,7 @@ from flask import Flask
 from flask.views import MethodView
 from flask import jsonify
 from flask_pymongo import PyMongo
+import re
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/test_db_11'  # Replace with your MongoDB URI
@@ -23,7 +24,7 @@ class ValidatePan(MethodView):
         request_body = self.request.get_json()
         pan = request_body.get('pan')
         if pan:
-            if len(pan) == 10 and pan[:5].isalpha() and pan[5:9].isdigit() and pan[-1].isalpha():
+            if re.match(r'^[A-Za-z]{5}\d{4}[A-Za-z]$', pan):
                 request_body['valid'] = True
             else:
                 request_body['valid'] = False

@@ -88,6 +88,7 @@ class Solution:
             self.quickSort(arr, p+1, high)
 
     def findUnion(self, arr1, arr2):
+        '''Given two sorted arrays arr1 and arr2 of size N and M respectively. The task is to find the union of these two arrays.'''
         i, j = 0, 0
         unionset = []
 
@@ -321,6 +322,47 @@ class Solution:
             else:
                 output += s[-1]
             return output == t
+        
+        elif case == 4:
+            '''
+            input: "thisFuncRead"
+            output: "this_func_read"
+            
+            and vice versa
+            '''
+            output = ''
+            if '_' not in s:
+                for char in s:
+                    if char.isupper():
+                        output += '_' + char.lower()
+                    else:
+                        output += char  
+            else:
+                capitalize = False
+                for i in range(len(s)):
+                    if s[i] == '_':
+                        capitalize = True
+                    else:
+                        if capitalize:
+                            output += s[i].upper()
+                            capitalize = False
+                        else:
+                            output += s[i]
+            return output == t
+        
+        elif case == 5:
+            '''
+            A
+            BB
+            CCC
+            DDDD
+            EEEEE
+            '''
+            output = ''
+            for i in range(65, 70):
+                output += chr(i) * (i-64) + '\n'
+            return output == t
+        
 
     def countDigitsWitMath(self, n):
         '''Count the number of digits in a number using math library'''
@@ -705,7 +747,6 @@ class Solution:
         return res
         '''
         return int(bin(n)[2:].zfill(32)[::-1], 2)
-    
 
     def mySqrt(self, x: int) -> int:
         '''
@@ -714,7 +755,7 @@ class Solution:
         You must not use any built-in exponent function or operator.
 
         For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
-        
+
 
         Example 1:
 
@@ -777,8 +818,21 @@ if __name__ == '__main__':
     #     'PM': ['Reena']
     # }
 
-    # print(Solution().pattern(s, t, 2))
+    s=''
+    t='''A
+BB
+CC
+DDD
+EEEEE
+'''
 
-    s = 'abbcccde'
-    t = 'ab2c3de'
-    print(Solution().pattern(s, t, 3))
+    print(Solution().pattern(s, t, 5))
+
+    # t = 'this_funcRead'
+    # s = 'thisFuncRead'
+    # print(Solution().pattern(s, t, 4))
+
+    # lt = [1,0,1,1,0,1,1,1]
+    # print(lt)
+    # Solution().moveZeroes(lt)
+    # print(lt)
