@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 import math
 from typing import List
 
@@ -782,6 +782,23 @@ class Solution:
             else:
                 r = mid - 1
         return result
+    
+    def count_word_occurrences(self, s, word='ballon'):
+        '''
+        s='baddllgdonhsdgballon'
+        word='ballon'
+        '''
+        word_counts = Counter(s)
+        target_counts = Counter(word)
+        output = float('inf')
+        
+        for char, count in target_counts.items():
+            if word_counts[char] < count:
+                output = 0
+                break
+            output = min(output, word_counts[char] // count)
+            word_counts[char] -= count * output
+        return output
 
 
 if __name__ == '__main__':
