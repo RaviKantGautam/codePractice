@@ -1,6 +1,7 @@
 from collections import defaultdict, Counter
 import math
 from typing import List
+import sys, os, shutil
 
 
 class Solution:
@@ -119,12 +120,6 @@ class Solution:
             if i in hashset:
                 return True
             hashset.add(i)
-
-        hashmap = {}
-        for i in nums:
-            hashmap[i] = i
-            if i in hashmap:
-                return True
         return False
 
     def isAnagram(self, s: str, t: str) -> bool:
@@ -799,9 +794,44 @@ class Solution:
             output = min(output, word_counts[char] // count)
             word_counts[char] -= count * output
         return output
+    
+    
+    def find_first_and_second_min_value(self, arr):
+        """
+        The function `find_first_and_second_min_value` returns the first and second smallest values in a
+        given array.
+        
+        :param arr: The given code defines a function `find_first_and_second_min_value` that takes a
+        list `arr` as input and returns the first and second minimum values in the list
+        :return: The function `find_first_and_second_min_value(arr)` returns the first minimum value and
+        the second minimum value from the input array `arr`. If the length of the array is less than 2,
+        it returns `None, None`.
+
+        Example 1:
+        input = [1, 2, 4, 5, 6]
+        Output: 1, 2
+        """
+        
+        if len(arr) < 2:
+            return None, None
+        
+        first_min = second_min = float('inf')
+
+        for i in range(len(arr)):
+            if arr[i] < first_min:
+                second_min = first_min
+                first_min = arr[i]
+            elif arr[i] < second_min and arr[i] != first_min:
+                second_min = arr[i]
+        return first_min, second_min
 
 
 if __name__ == '__main__':
+    # Solution().count_word_occurrences('baddllgdonhsdgballon')
+
+    print(Solution().find_first_and_second_min_value([2, 2, 4, 5, 6]))
+
+
     # arr1 = [1, 2, 4, 5, 6]
     # arr2 = [2, 3, 5, 7]
     # print(Solution().findUnion(arr1, arr2))
@@ -835,15 +865,15 @@ if __name__ == '__main__':
     #     'PM': ['Reena']
     # }
 
-    s=''
-    t='''A
-BB
-CC
-DDD
-EEEEE
-'''
+#     s=''
+#     t='''A
+# BB
+# CC
+# DDD
+# EEEEE
+# '''
 
-    print(Solution().pattern(s, t, 5))
+#     print(Solution().pattern(s, t, 5))
 
     # t = 'this_funcRead'
     # s = 'thisFuncRead'
