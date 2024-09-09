@@ -752,9 +752,14 @@ class Solution:
         output: 2
         '''
         freq_dict = {}
+        max_count = 0
+        key = 0
         for num in nums:
             freq_dict[num] = freq_dict.get(num, 0) + 1
-        return sorted([k for k, v in freq_dict.items() if v == max(freq_dict.values())])
+            if freq_dict[num] > max_count:
+                max_count = freq_dict[num]
+                key = num
+        return key
 
     def hammingWeight(self, n):
         '''
