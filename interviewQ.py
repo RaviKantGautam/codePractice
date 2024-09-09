@@ -159,12 +159,13 @@ class Solution:
         Return the answer with the smaller index first.
         '''
         hashmap = {}
+        output = []
         for i, n in enumerate(nums):
             diff = target-n
             if diff in hashmap:
-                return [hashmap[diff], i]
+                output.append([hashmap[diff], i])
             hashmap[n] = i
-        return
+        return False if len(output) == 0 else output
 
     def removeDuplicates(self, nums: List[int]) -> int:
         '''
@@ -356,6 +357,45 @@ class Solution:
             output = ''
             for i in range(65, 70):
                 output += chr(i) * (i-64) + '\n'
+            return output == t
+        
+        elif case == 6:
+            '''
+            Given an array, find the nearest smaller number before it.
+            Example:
+            input: [39,27,11,4,24,32,32,1]
+            output: -1,-1,-1,-1,4,24,24,-1
+            '''
+
+            stack = []
+            output = []
+            for i in range(len(s)):
+                while stack and stack[-1] >= s[i]:
+                    stack.pop()
+                if stack:
+                    output.append(stack[-1])
+                else:
+                    output.append(-1)
+                stack.append(s[i])   
+            return output == t
+        
+        elif case == 7:
+            '''            
+            Write a function that prints the numbers from 1 to 100. For multiples of 3,
+            print Fizz instead of the number, and for multiples of 5, print Buzz.
+            For numbers that are multiples of both 3 and 5, print FizzBuzz.
+            '''
+
+            output = []
+            for i in range(1, 101):
+                if i % 3 == 0 and i % 5 == 0:
+                    output.append('FizzBuzz')
+                elif i % 3 == 0:
+                    output.append('Fizz')
+                elif i % 5 == 0:
+                    output.append('Buzz')
+                else:
+                    output.append(i)
             return output == t
         
 
@@ -704,6 +744,17 @@ class Solution:
         for num in nums:
             freq_dict[num] = freq_dict.get(num, 0) + 1
         return sorted(nums, key=lambda x: (freq_dict[x], -x))
+    
+    def find_unique_frequency_range(self, nums):
+        '''
+        Given an array of integers nums, return the smallest range of integers k such that the frequency of each value in k is unique.
+        input: [1,6,2,2,3,2,4,3,3]
+        output: 2
+        '''
+        freq_dict = {}
+        for num in nums:
+            freq_dict[num] = freq_dict.get(num, 0) + 1
+        return sorted([k for k, v in freq_dict.items() if v == max(freq_dict.values())])
 
     def hammingWeight(self, n):
         '''
@@ -827,59 +878,6 @@ class Solution:
 
 
 if __name__ == '__main__':
-    # Solution().count_word_occurrences('baddllgdonhsdgballon')
-
-    print(Solution().find_first_and_second_min_value([2, 2, 4, 5, 6]))
+    print(Solution().find_unique_frequency_range([1,2,3,4,4,5,4,3,2,1,3,4]))
 
 
-    # arr1 = [1, 2, 4, 5, 6]
-    # arr2 = [2, 3, 5, 7]
-    # print(Solution().findUnion(arr1, arr2))
-
-    # nums = [1, 2, 3, 1]
-    # print(Solution().hasDuplicate(nums))
-
-    # s = 'car'
-    # t = 'rac'
-    # print(Solution().isAnagram(s, t))
-
-    # s='Was it a car or a cat I saw?'
-    # print(Solution().isPalindrome(s))
-
-    # s={"a":{"b":{}},"c":{"d":{}},"e":{"f":{}}}
-    # t={"b":{"a":{}},"d":{"c":{}},"f":{"e":{}}}
-    # print(Solution().pattern(s, t, 1))
-
-    # s = {
-    #     "Amit" : "TL",
-    #     "Ravi" : "HR",
-    #     "Reena" : 'PM',
-    #     "Mohan" : "TL",
-    #     "Kapil" : "TL",
-    #     "Rajesh" : "HR",
-    #     "Geeta" : "TL"
-    # }
-    # t = {
-    #     'TL': ['Amit', 'Mohan', 'Kapil', 'Geeta'],
-    #     'HR': ['Ravi', 'Rajesh'],
-    #     'PM': ['Reena']
-    # }
-
-#     s=''
-#     t='''A
-# BB
-# CC
-# DDD
-# EEEEE
-# '''
-
-#     print(Solution().pattern(s, t, 5))
-
-    # t = 'this_funcRead'
-    # s = 'thisFuncRead'
-    # print(Solution().pattern(s, t, 4))
-
-    # lt = [1,0,1,1,0,1,1,1]
-    # print(lt)
-    # Solution().moveZeroes(lt)
-    # print(lt)
