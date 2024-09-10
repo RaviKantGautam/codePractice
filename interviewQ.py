@@ -753,13 +753,11 @@ class Solution:
         '''
         freq_dict = {}
         max_count = 0
-        key = 0
         for num in nums:
             freq_dict[num] = freq_dict.get(num, 0) + 1
             if freq_dict[num] > max_count:
                 max_count = freq_dict[num]
-                key = num
-        return key
+        return min({k for k, v in freq_dict.items() if v == max_count})                
 
     def hammingWeight(self, n):
         '''
@@ -883,6 +881,6 @@ class Solution:
 
 
 if __name__ == '__main__':
-    print(Solution().find_unique_frequency_range([1,2,3,4,4,5,4,3,2,1,3,4]))
+    print(Solution().find_unique_frequency_range([1,2,4,4,5,4,3,2,1,3,3]))
 
 
