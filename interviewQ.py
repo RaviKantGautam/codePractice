@@ -4,89 +4,6 @@ from typing import List
 
 
 class Solution:
-    def selectionSort(self, arr):
-        for i in range(len(arr)):
-            minIndex = i
-            for j in range(i+1, len(arr)):
-                if arr[j] < arr[minIndex]:
-                    minIndex = j
-            arr[i], arr[minIndex] = arr[minIndex], arr[i]
-        return arr
-
-    def bubbleSort(self, arr):
-        low = 0
-        high = len(arr) - 1
-        while low < high:
-            for i in range(low, high):
-                if arr[i] > arr[i+1]:
-                    arr[i], arr[i+1] = arr[i+1], arr[i]
-            high -= 1
-            for i in range(high, low, -1):
-                if arr[i] < arr[i-1]:
-                    arr[i], arr[i-1] = arr[i-1], arr[i]
-            low += 1
-        return arr
-
-    def insertionSort(self, arr):
-        for i in range(1, len(arr)):
-            key = arr[i]
-            j = i - 1
-            while j >= 0 and key < arr[j]:
-                arr[j+1] = arr[j]
-                j -= 1
-            arr[j+1] = key
-        return arr
-
-    def merge(self, arr, low, mid, high):
-        left = low
-        right = mid + 1
-        temp = []
-
-        while left <= mid and right <= high:
-            if arr[left] < arr[right]:
-                temp.append(arr[left])
-                left += 1
-            else:
-                temp.append(arr[right])
-                right += 1
-
-        while left <= mid:
-            temp.append(arr[left])
-            left += 1
-
-        while right <= high:
-            temp.append(arr[right])
-            right += 1
-
-        for i in range(low, high+1):
-            arr[i] = temp[i-low]
-
-    def mergeSort(self, arr, low, high):
-        if low < high:
-            mid = (low + high) // 2
-            self.mergeSort(arr, low, mid)
-            self.mergeSort(arr, mid+1, high)
-            self.merge(arr, low, mid, high)
-        return arr
-
-    def partition(self, arr, low, high):
-        pivot = arr[high]
-        i = low-1
-        for j in range(low, high):
-            if arr[j] < pivot:
-                i += 1
-                arr[j], arr[i] = arr[i], arr[j]
-
-        arr[i+1], arr[high] = arr[high], arr[i+1]
-
-        return i+1
-
-    def quickSort(self, arr, low, high):
-        if low < high:
-            p = self.partition(arr, low, high)
-            self.quickSort(arr, low, p-1)
-            self.quickSort(arr, p+1, high)
-
     def findUnion(self, arr1, arr2):
         '''Given two sorted arrays arr1 and arr2 of size N and M respectively. The task is to find the union of these two arrays.'''
         i, j = 0, 0
@@ -119,12 +36,6 @@ class Solution:
             if i in hashset:
                 return True
             hashset.add(i)
-
-        hashmap = {}
-        for i in nums:
-            hashmap[i] = i
-            if i in hashmap:
-                return True
         return False
 
     def isAnagram(self, s: str, t: str) -> bool:
@@ -221,10 +132,21 @@ class Solution:
 
         You may return the output in any order.
         '''
-        hashmap = {}
-        for n in nums:
-            hashmap[n] = 1 + hashmap.get(n, 0)
-        return [key for key, val in hashmap.items() if val >= k]
+        count = {}
+        for num in nums:
+            count[num] = 1 + count.get(num, 0)
+
+        arr = []
+        for num, cnt in count.items():
+            arr.append([cnt, num])
+        print(arr)
+        arr.sort()
+        print(arr)
+
+        res = []
+        while len(res) < k:
+            res.append(arr.pop()[1])
+        return res
 
     def rotate(self, nums: List[int], k: int) -> None:
         '''
@@ -800,56 +722,30 @@ class Solution:
             word_counts[char] -= count * output
         return output
 
+    
+    def encode(self, strs: List[str]) -> str:
+        # https://neetcode.io/problems/string-encode-and-decode/question
+        res = ""
+        for i in strs:
+            res+=str(len(i)) + "#" + i
+        return res
+
+    def decode(self, s: str) -> List[str]:
+        # https://neetcode.io/problems/string-encode-and-decode/question
+        res, i = [], 0
+
+        while i < len(s):
+            j=i
+            while s[j] != "#":
+                j+=1
+            length = int(s[i:j])
+            res.append(s[j+1:j+1+length])
+            i = j+1+length
+        return res
+
 
 if __name__ == '__main__':
-    # arr1 = [1, 2, 4, 5, 6]
-    # arr2 = [2, 3, 5, 7]
-    # print(Solution().findUnion(arr1, arr2))
+    sol = Solution()
+    print(sol.selectionSort([64, 25, 12, 22, 11]))
 
-    # nums = [1, 2, 3, 1]
-    # print(Solution().hasDuplicate(nums))
 
-    # s = 'car'
-    # t = 'rac'
-    # print(Solution().isAnagram(s, t))
-
-    # s='Was it a car or a cat I saw?'
-    # print(Solution().isPalindrome(s))
-
-    # s={"a":{"b":{}},"c":{"d":{}},"e":{"f":{}}}
-    # t={"b":{"a":{}},"d":{"c":{}},"f":{"e":{}}}
-    # print(Solution().pattern(s, t, 1))
-
-    # s = {
-    #     "Amit" : "TL",
-    #     "Ravi" : "HR",
-    #     "Reena" : 'PM',
-    #     "Mohan" : "TL",
-    #     "Kapil" : "TL",
-    #     "Rajesh" : "HR",
-    #     "Geeta" : "TL"
-    # }
-    # t = {
-    #     'TL': ['Amit', 'Mohan', 'Kapil', 'Geeta'],
-    #     'HR': ['Ravi', 'Rajesh'],
-    #     'PM': ['Reena']
-    # }
-
-    s=''
-    t='''A
-BB
-CC
-DDD
-EEEEE
-'''
-
-    print(Solution().pattern(s, t, 5))
-
-    # t = 'this_funcRead'
-    # s = 'thisFuncRead'
-    # print(Solution().pattern(s, t, 4))
-
-    # lt = [1,0,1,1,0,1,1,1]
-    # print(lt)
-    # Solution().moveZeroes(lt)
-    # print(lt)
