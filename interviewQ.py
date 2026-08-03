@@ -1,6 +1,7 @@
 from collections import defaultdict, Counter
 import math
 from typing import List
+import sys, os, shutil
 
 
 class Solution:
@@ -75,12 +76,13 @@ class Solution:
         Return the answer with the smaller index first.
         '''
         hashmap = {}
+        output = []
         for i, n in enumerate(nums):
             diff = target-n
             if diff in hashmap:
-                return [hashmap[diff], i]
+                output.append([hashmap[diff], i])
             hashmap[n] = i
-        return
+        return False if len(output) == 0 else output
 
     def removeDuplicates(self, nums: List[int]) -> int:
         '''
@@ -283,6 +285,45 @@ class Solution:
             output = ''
             for i in range(65, 70):
                 output += chr(i) * (i-64) + '\n'
+            return output == t
+        
+        elif case == 6:
+            '''
+            Given an array, find the nearest smaller number before it.
+            Example:
+            input: [39,27,11,4,24,32,32,1]
+            output: -1,-1,-1,-1,4,24,24,-1
+            '''
+
+            stack = []
+            output = []
+            for i in range(len(s)):
+                while stack and stack[-1] >= s[i]:
+                    stack.pop()
+                if stack:
+                    output.append(stack[-1])
+                else:
+                    output.append(-1)
+                stack.append(s[i])   
+            return output == t
+        
+        elif case == 7:
+            '''            
+            Write a function that prints the numbers from 1 to 100. For multiples of 3,
+            print Fizz instead of the number, and for multiples of 5, print Buzz.
+            For numbers that are multiples of both 3 and 5, print FizzBuzz.
+            '''
+
+            output = []
+            for i in range(1, 101):
+                if i % 3 == 0 and i % 5 == 0:
+                    output.append('FizzBuzz')
+                elif i % 3 == 0:
+                    output.append('Fizz')
+                elif i % 5 == 0:
+                    output.append('Buzz')
+                else:
+                    output.append(i)
             return output == t
         
 
@@ -631,6 +672,20 @@ class Solution:
         for num in nums:
             freq_dict[num] = freq_dict.get(num, 0) + 1
         return sorted(nums, key=lambda x: (freq_dict[x], -x))
+    
+    def find_unique_frequency_range(self, nums):
+        '''
+        Given an array of integers nums, return the smallest range of integers k such that the frequency of each value in k is unique.
+        input: [1,6,2,2,3,2,4,3,3]
+        output: 2
+        '''
+        freq_dict = {}
+        max_count = 0
+        for num in nums:
+            freq_dict[num] = freq_dict.get(num, 0) + 1
+            if freq_dict[num] > max_count:
+                max_count = freq_dict[num]
+        return min({k for k, v in freq_dict.items() if v == max_count})                
 
     def hammingWeight(self, n):
         '''
@@ -721,6 +776,36 @@ class Solution:
             output = min(output, word_counts[char] // count)
             word_counts[char] -= count * output
         return output
+    
+    
+    def find_first_and_second_min_value(self, arr):
+        """
+        The function `find_first_and_second_min_value` returns the first and second smallest values in a
+        given array.
+        
+        :param arr: The given code defines a function `find_first_and_second_min_value` that takes a
+        list `arr` as input and returns the first and second minimum values in the list
+        :return: The function `find_first_and_second_min_value(arr)` returns the first minimum value and
+        the second minimum value from the input array `arr`. If the length of the array is less than 2,
+        it returns `None, None`.
+
+        Example 1:
+        input = [1, 2, 4, 5, 6]
+        Output: 1, 2
+        """
+        
+        if len(arr) < 2:
+            return None, None
+        
+        first_min = second_min = float('inf')
+
+        for i in range(len(arr)):
+            if arr[i] < first_min:
+                second_min = first_min
+                first_min = arr[i]
+            elif arr[i] < second_min and arr[i] != first_min:
+                second_min = arr[i]
+        return first_min, second_min
 
     
     def encode(self, strs: List[str]) -> str:
