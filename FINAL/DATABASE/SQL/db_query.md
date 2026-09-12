@@ -4,7 +4,7 @@ select customer_id from customers where year = 2020 group by customer_id having 
 
 ### Customers Without Orders
 
-select name from customers where id not in (select customer_id from orders);
+select name from customers as c where not exist (select 1 from orders as o where o.customer_id = c.customer_id);
 
 select c.name from customers left join orders as ord on c.customer_id = ord.customer_id where ord.customer_id is null;
 

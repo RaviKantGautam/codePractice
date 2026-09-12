@@ -1,21 +1,23 @@
-from typing import List
-class Solution:
-    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count = {}
-        for num in nums:
-            count[num] = 1 + count.get(num, 0)
-        count = filter(lambda x: x[1] >= k, sorted(count.items(), key=lambda x: x[1], reverse=True))
+class User:
 
-        arr = []
-        for num, cnt in count.items():
-            arr.append([cnt, num])
-        print(arr)
-        arr.sort()
-        print(arr)
+    def __init__(self, name):
+        self.name = name
 
-        res = []
-        while len(res) < k:
-            res.append(arr.pop()[1])
-        return res
+    # Instance method
+    def get_name(self):
+        return self.name
 
-print(Solution().topKFrequent([1,1,1,2,2,3], 2))
+    # Class method
+    @classmethod
+    def from_string(cls, data):
+        return cls(data)
+
+    # Static method
+    @staticmethod
+    def validate_name(name):
+        return bool(name.strip())
+
+obj = User("Alice")
+print(obj.get_name())
+print(User.validate_name("Alice"))
+print(User.from_string("Bob").get_name())

@@ -1,110 +1,113 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
-import json
-import time
-import math
-import pandas as pd
+import csv
 import time
 
 
-class Scrapy:
+class Scrapy2:
     def __init__(self):
-        # options = webdriver.ChromeOptions()
-        # options.add_argument('--headless')
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--disable-extensions')
+        # self.driver = webdriver.Chrome(options=options)
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        self.result = []
-        self.page = 1
-        self.base_url = "https://www.brilliantearth.com/loose-diamonds/list/"
+        self.file = open('diamonds.csv', 'a', newline='')
+        header = ['Name', 'Price', 'Carat', 'Cut', 'Color', 'Clarity', 'Certificate', 'Table Size',
+                  'Depth', 'Symmetry', 'Polish', 'Fluorescence', 'Measurements', 'Length', 'Width', 'Height']
+        csv.writer(self.file).writerow(header)
+        self.base_url = "https://www.brilliantearth.com/diamond/round/"
 
-    def get_data(self, page=1):
-        url = self.base_url + f"?page={page}"
-        if page == 1:
-            self.driver.get(url)
-        self.driver.execute_script("window.open('{}', '_blank')".format(url))
+    def driver_config(self):
+        self.driver.get(self.base_url)
+        remove_filter = self.wait_for_element("filter_exposed_text")
+        remove_filter.find_element(By.TAG_NAME, "a").click()
+        return self.wait_for_element("diamonds_search_table")
+
+    def wait_for_element(self, element):
+        wait = WebDriverWait(self.driver, 10)
+        return wait.until(EC.presence_of_element_located((By.ID, element)))
+
+    def get_data(self):
+        main_div = self.driver_config()
         time.sleep(5)
-        
-        # Switch to the second tab
-        self.driver.switch_to.window(self.driver.window_handles[-1])
+        inner_divs = main_div.find_elements(By.CSS_SELECTOR, ".inner.item")
+        item_count = 0
+        while len(inner_divs) - 1 > item_count:
+            inner_divs[item_count].click()
+            try:
+                parsed_data = self.parse_data(
+                    inner_divs[item_count].get_attribute('innerHTML'))
+                print(parsed_data)
+                self.write_to_csv(parsed_data)
+                inner_divs[item_count].click()
+                item_count += 1
+                inner_divs = main_div.find_elements(
+                    By.CSS_SELECTOR, ".inner.item")
+                # if item_count == len(inner_divs) - 1:
+                if item_count == 10:
+                    break
+            except Exception as e:
+                print(e)
+                item_count += 1
+                continue
+        return True
 
-        # Perform your desired actions on the second tab
-        # For example, you can get the page source
-        page_source = self.driver.page_source
-        while '{"diamonds' not in page_source:
-            time.sleep(5)
-            # x = random.randint(100, 1920)
-            # y = random.randint(100, 1080)
-            # duration = random.randint(1, 5)
-            # pyautogui.moveRel(10, 0, duration=1)
-            # pyautogui.moveTo(x, y, duration=duration)
-            print("Retrying")
-            page_source = self.driver.page_source
-
-        soup = BeautifulSoup(page_source, 'html.parser')
-        body = soup.find('body').text
+    def parse_data(self, html):
         try:
-            data = json.loads(body)
-        except:
-            print("Error")
-            print("Data")
-            print(body)
-            data = {}
-        
-        self.close_tab()
-        return data
-    
+            bs = BeautifulSoup(html, 'html.parser')
+            card = bs.find('div', {"class": 'table-diamond-detail'})
+            name = card.find(
+                'div', {'class': 'diamond-info-panel'}).find('p').text
+            diamond_info = card.find_all('div', {'class': 'diamond-line-info'})
+            price = diamond_info[0].find(
+                'div', {'class': 'diamond-line-info-text'}).text.strip()
+            carat = diamond_info[1].find(
+                'div', {'class': 'diamond-line-info-text'}).text.strip()
+            cut = diamond_info[2].find(
+                'div', {'class': 'diamond-line-info-text'}).text.strip()
+            color = diamond_info[3].find(
+                'div', {'class': 'diamond-line-info-text'}).text.strip()
+            clarity = diamond_info[4].find(
+                'div', {'class': 'diamond-line-info-text'}).text.strip()
+            additional_info = {}
+            additional_detail = card.find_all('div', {'class': 'diamond-line-info'})[
+                5].find('div', {'class': 'additonal-details-content'})
+            for i in additional_detail.find_all('div', {'class': 'headline'}):
+                key = i.text.strip()
+                value = i.findNextSibling('div').text.strip()
+                additional_info[key] = value
+
+            extra_additional_detail = card.find_all('div', {'class': 'diamond-line-info'})[
+                5].find('div', {'class': 'list-unstyled d-flex additonal-details-content'})
+            for i in extra_additional_detail.find_all('div', {'class': 'headline'}):
+                key = i.text.strip()
+                value = i.findNextSibling('div').text.strip()
+                additional_info[key] = value
+        except Exception as e:
+            print(e)
+            print('Error')
+            raise e
+        return [name, price, carat, cut, color, clarity] + list(additional_info.values())
+
+    def write_to_csv(self, data):
+        writer = csv.writer(self.file)
+        writer.writerow(data)
+
     def close_tab(self):
         self.driver.close()
-        self.driver.switch_to.window(self.driver.window_handles[0])
-    
-    def get_all_data(self):
-        data = self.get_data()
-        total_pages = math.ceil(len(data['diamonds'])/int(data.get('total_pages', 1)))
-        self.parse_data(data)
-        if total_pages > 1:
-            for i in range(2, total_pages):
-                data = self.get_data(page=i)
-                self.parse_data(data)
-                if len(self.result) >= 1000:
-                    break
-    
-    def parse_data(self, data):
-        for i in range(len(data['diamonds'])):
-            price = data['diamonds'][i]['price']
-            carat  = data['diamonds'][i]['carat']
-            color = data['diamonds'][i]['color']
-            cut = data['diamonds'][i]['cut']
-            clarity = data['diamonds'][i]['clarity']
-            shape = data['diamonds'][i]['shape']
-            measurements = data['diamonds'][i]['measurements']
-            report = data['diamonds'][i]['report']
-            depth = data['diamonds'][i]['depth']
-            table = data['diamonds'][i]['table'] 
-            origin = data['diamonds'][i]['origin']
-            symmetry = data['diamonds'][i]['symmetry']
-            flour = data['diamonds'][i]['fluorescence']
-            polish = data['diamonds'][i]['polish']
-            culet = data['diamonds'][i]['culet']
-            girdle = data['diamonds'][i]['girdle']
-            length_width_ratio = data['diamonds'][i]['length_width_ratio']
 
-            self.result.append([price, carat, color, cut, clarity, shape, measurements, report, depth, table, origin, symmetry, flour, polish, culet, girdle, length_width_ratio])
-        
-        return self.result
-    
-    def run(self):
-        self.get_all_data()
-        column = ['price', 'carat', 'color', 'cut', 'clarity', 'shape', 'measurements', 'report', 'depth', 'table', 'origin', 'symmetry', 'fluorescence', 'polish', 'culet', 'girdle', 'length_width_ratio']
-        pd.DataFrame(self.result, columns=column).to_csv("diamonds.csv")
-        print("Data Saved")
-        return self.result
-    
-    def close(self):
+    def __del__(self):
         self.driver.quit()
 
-if __name__ == "__main__":
-    scrapy = Scrapy()
-    result = scrapy.run()
-    print(result)
-    scrapy.close()
 
+if __name__ == '__main__':
+    s = Scrapy2()
+    s.get_data()
+    s.close_tab()

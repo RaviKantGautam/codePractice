@@ -545,6 +545,20 @@ if len(list(top_two)) == 2:
     employees = Employee.objects.filter(
         department__name="Python", salary=second_salary
     )
+
+
+from django.db.models import F, Window
+from django.db.models.functions import DenseRank
+from myapp.models import Employee
+
+# Rank employees within each department
+ranked_by_dept = Employee.objects.annotate(
+    dept_rank=Window(
+        expression=DenseRank(),
+        partition_by=[F('department_id')],
+        order_by=F('salary').desc()
+    )
+)
 ```
 
 ---

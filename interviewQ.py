@@ -75,14 +75,29 @@ class Solution:
 
         Return the answer with the smaller index first.
         '''
+
+        # Solution 1: Brute Force
         hashmap = {}
-        output = []
         for i, n in enumerate(nums):
             diff = target-n
             if diff in hashmap:
-                output.append([hashmap[diff], i])
+                return [hashmap[diff], i]
             hashmap[n] = i
-        return False if len(output) == 0 else output
+
+        # Solution 2: Two Pointer
+        l, r = 0, len(nums)-1
+        while l < r:
+            total = nums[l] + nums[r]
+            if total == target:
+                return [l, r]
+            elif total < target:
+                l += 1
+            else:
+                r -= 1
+
+        return False
+
+    
 
     def removeDuplicates(self, nums: List[int]) -> int:
         '''
@@ -225,8 +240,8 @@ class Solution:
             '''
             Write program to form pattern.
             For example:
-            input = abbccde
-            ouptut = ab2c3de
+            input = abbcccde
+            output = ab2c3de
             '''
             n = len(s)
             count = 1
@@ -828,9 +843,88 @@ class Solution:
             i = j+1+length
         return res
 
+    def findKUnsorted(self, arr, k):
+        # Find kth largest without sorting
+        # a = [8, 2, 6, 4, 9, 11]
+        # k = 3
+
+        # Solution 1: Using heapq
+        import heapq
+
+        heap = []
+
+        for num in arr:
+            heapq.heappush(heap, num)
+
+            if len(heap) > k:
+                heapq.heappop(heap)
+
+        print(heap[0])
+
+
+        # Solution 2: Using min and remove
+        # top = []
+
+        # for num in arr:
+        #     top.append(num)
+
+        #     if len(top) > k:
+        #         smallest = min(top)
+        #         top.remove(smallest)
+
+        # print(min(top))
+
+        # # Solution 3: Using sort
+        # arr.sort()
+        # n = len(arr)
+        # print(arr[n-k])
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+
+        # solution 1: Sliding Window (Optimal)
+        char_map = {}  # Stores character -> last seen index
+        left = 0
+        max_len = 0
+
+        for right, char in enumerate(s):
+            # If char is already in the window, jump the left pointer
+            if char in char_map and char_map[char] >= left:
+                left = char_map[char] + 1
+            
+            # Update the last seen index of the character
+            char_map[char] = right
+            
+            # Calculate current window size
+            max_len = max(max_len, right - left + 1)
+
+        # solution 2: Sliding Window
+        charSet = set()
+        l = 0
+        max_len = 0
+
+        for r in range(len(s)):
+            while s[r] in charSet:
+                charSet.remove(s[l])
+                l += 1
+            charSet.add(s[r])
+            max_len = max(max_len, r - l + 1)
+
+        # solution 3: Brute Force
+        max_len = 0
+        for i in range(len(s)):
+            charSet = set()
+            for j in range(i, len(s)):
+                if s[j] in charSet:
+                    break
+                charSet.add(s[j])
+            max_len = max(max_len, len(charSet))
+
+        return max_len
+    
 
 if __name__ == '__main__':
     sol = Solution()
-    print(sol.selectionSort([64, 25, 12, 22, 11]))
+    sol.findKUnsorted([8, 2, 6, 4, 9, 11], 2)
 
+    # print(sol.selectionSort([64, 25, 12, 22, 11]))
 
