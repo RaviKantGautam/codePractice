@@ -1,23 +1,17 @@
-class User:
+from typing import List
 
-    def __init__(self, name):
-        self.name = name
+class Solution:
+    def vowelStrings(self, word: str, queries: List[List[int]]) -> List[int]:
+        # Your code goes here
+        vowel_set = {'a', 'e', 'i', 'o','u'}
+        output = []
+        for i in queries:
+            char_set = {i for i in word[i[0]:i[1]+1]}
+            output.append(len(vowel_set.intersection(char_set)))
+        return output
 
-    # Instance method
-    def get_name(self):
-        return self.name
-
-    # Class method
-    @classmethod
-    def from_string(cls, data):
-        return cls(data)
-
-    # Static method
-    @staticmethod
-    def validate_name(name):
-        return bool(name.strip())
-
-obj = User("Alice")
-print(obj.get_name())
-print(User.validate_name("Alice"))
-print(User.from_string("Bob").get_name())
+if __name__ == "__main__":
+    solution = Solution()
+    word = "prefixsum"
+    queries = [[0, 2], [1, 4], [3, 5]]
+    print(solution.vowelStrings(word, queries))
