@@ -1450,6 +1450,8 @@ async def cardless_withdraw(
 
 **Answer:** Functionally, they behave identically. However, using `Annotated` (introduced via PEP 593) is the modern Python convention because it decouples your dependency declaration from your structural type hints. With `Annotated[DbSession, Depends(get_db)]`, type checkers and IDEs can resolve the object type directly as a clean `DbSession` rather than inferring it from a default parameter value, making code cleanly reusable outside of FastAPI (e.g., in standard unit tests).
 
+Dependency Injection is a design pattern where a component receives the objects or services it depends on rather than creating them itself. FastAPI provides a built-in dependency injection system through Depends(). FastAPI analyzes the dependency graph, resolves dependencies and their nested dependencies, injects their results into path operations, and can also handle dependency cleanup. Dependencies can be synchronous or asynchronous, making the mechanism suitable for things like database sessions, authentication, configuration, and service classes.
+
 ### Q7: How does FastAPI's dependency injection system handle sub-dependency caching?
 
 **Answer:** By default, if multiple sub-dependencies depend on the same parent dependency (such as multiple services requiring the exact same database session within a single incoming HTTP request), FastAPI caches the initial output of that parent dependency and shares the identical instance across the whole execution tree. You can override this behavior by explicitly setting `use_cache=False` inside the `Depends()` declaration.
@@ -1601,3 +1603,21 @@ You can safely substitute real infrastructure connections with test doubles with
 **Answer:** If an endpoint returns massive arrays of database rows, FastAPI's default behavior—re-validating every row object against a `response_model` schema—can introduce significant CPU serialization overhead. You can optimize this by setting `response_model=None` and using database-native JSON aggregation strings directly, or using Pydantic's pre-compiled `TypeAdapter.dump_json()` utility to bypass internal processing pipelines.
 
 ---
+
+#### Q. what is the basic difference between using fastapi and flask in the context of asynchronous?
+A. So the point here is the event loop, we have a concept of event loop in the asynchronous which the fastapi uses. So the basic idea behind the working is that we deploy the flask application via gunicorn which configure multiple worker as threads. So when a request lies on the flask api it is handled by thread, which means each thread operate on request at a time this is where the event loop does something different that it manage all the request in a event loop and using that it process request without blocking other requests.
+
+
+#### Q. List of basic cli commands in fastapi
+A. 
+	1. fastapi dev : to run in development environment
+	2. uv run fastapi dev --entrypoint main:app : to run the application by giving the entrypoint
+	3. fastapi run --workers 4 main.py: to run in production environment
+	4. uv run pytest : This command is use run test
+	5. uv run uvicorn main:app --host 0.0.0.0 --port 8080 --workers 4 : Same as point 3
+
+#### Q. what is the use of pyproject.toml file in the fastapi project
+A. This is a project configuration file which fastapi uses to make changes in the project structure
+
+#### Q. What is a lifespan event in fastapi
+A. It is a logic (code) that should be executed before the application **starts up**. This means that this code will be executed **once**, **before** the application **starts receiving requests**. The same way, you can define logic (code) that should be executed when the application is **shutting down**. In this case, this code will be executed **once**, **after** having handled possibly **many requests**.
