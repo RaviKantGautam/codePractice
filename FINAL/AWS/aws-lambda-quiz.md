@@ -511,27 +511,6 @@
 - [ ] c) Lambda allows unlimited TCP port 25 traffic.
 - [ ] d) Lambda imposes restrictions on the execution time of functions.
 
-#### Q65. How long can an AWS Lambda function execute?
-
-- [ ] a) 60 seconds
-- [x] b) 300 seconds
-- [ ] c) 600 seconds
-- [ ] d) 30 seconds
-
-#### Q66. How does AWS Lambda secure my code?
-
-- [ ] a) AWS Lambda stores code in plaintext without encryption.
-- [x] b) AWS Lambda encrypts code and stores it in Amazon S3.
-- [ ] c) AWS Lambda does not provide any security measures for code.
-- [ ] d) AWS Lambda relies on third-party security tools for code protection.
-
-#### Q67. Which languages are supported by AWS Lambda?
-
-- [x] a) Python, C#, JavaScript, and Java
-- [ ] b) Ruby, PHP, and Swift
-- [ ] c) C++ and Rust
-- [ ] d) HTML and CSS
-
 #### Q68. What is the definition of Auto-Scaling?
 
 - [ ] a) Auto-Scaling is a feature that automatically scales AWS Lambda functions.
@@ -546,26 +525,12 @@
 - [ ] c) Users have access to infrastructure but with limited permissions.
 - [ ] d) Users can request access to infrastructure from AWS support.
 
-#### Q70. Can I use packages with AWS Lambda?
-
-- [ ] a) No, AWS Lambda does not support the use of external packages.
-- [x] b) Yes, AWS Lambda supports the use of custom and NPM packages.
-- [ ] c) AWS Lambda only supports built-in AWS packages.
-- [ ] d) Packages can be used but require additional fees.
-
 #### Q71. Are AWS Lambda functions available and to what extent?
 
 - [ ] a) AWS Lambda functions are available 24/7 without any limitations.
 - [ ] b) AWS Lambda functions are available but may experience scheduled downtimes.
 - [x] c) AWS Lambda functions are highly available with redundancy and replication.
 - [ ] d) AWS Lambda functions are available only during business hours.
-
-#### Q72. Is there any default limit to be applied at a functional level?
-
-- [ ] a) Yes, there is a default limit applied at a functional level.
-- [x] b) No, there is no default limit applied at a functional level.
-- [ ] c) The default limit depends on the AWS Lambda service plan.
-- [ ] d) Functional limits are set by users during configuration.
 
 #### Q73. You are using lambda (with large ram allocations) to process videos uploaded to S3 and to convert from their video format to H264. However the operation fails when dealing with particularly large video files. What is the cause of this?
 

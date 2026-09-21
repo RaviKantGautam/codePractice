@@ -1,0 +1,28 @@
+EC2
+Fargate
+S3
+EFS
+EBS
+Auto Scaling
+ELB
+SQS
+SNS
+EventBridge
+ECS
+EKS
+ECR
+Lambda
+CloudFormation
+RDS
+Aurora
+DynamoDB
+Redshift
+DMS - Database migration service 
+CloudWatch
+CloudTrail
+CodePipeline
+CodeBuild
+CodeDeploy
+Step Functions
+Amazon MQ
+API Gateway
