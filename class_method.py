@@ -10,6 +10,13 @@ class User:
     # Class method
     @classmethod
     def from_string(cls, data):
+        '''
+        Create a User instance from a string containing the user's name.
+        Args:
+            data (str): A string containing the user's name.
+        Returns:
+            User: A new User instance created from the provided string.
+        '''
         return cls(data)
 
     # Static method

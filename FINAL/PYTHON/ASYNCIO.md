@@ -15,7 +15,7 @@ print(f" result {[result.result() for result in results]}")
 which is library use to process files asyncroniously?
 answer: aiofiles
 
-async with aiofiles. open (download_path, "wb") as f:
-    async for chunk in response.aiter_bytes (chunk_size=8192):
+async with aiofiles.open(download_path, "wb") as f:
+    async for chunk in response.aiter_bytes(chunk_size=8192):
         await f.write(chunk)
 

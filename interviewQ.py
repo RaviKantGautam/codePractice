@@ -342,9 +342,9 @@ class Solution:
             return output == t
         
 
-    def countDigitsWitMath(self, n):
-        '''Count the number of digits in a number using math library'''
-        return math.floor(math.log10(n)) + 1
+    # def countDigitsWitMath(self, n):
+    #     '''Count the number of digits in a number using math library'''
+    #     return math.floor(math.log10(n)) + 1
 
     def countDigits(self, n):
         count = 0
@@ -360,14 +360,14 @@ class Solution:
             n //= 10
         return revNum
 
-    def findDivisors(self, n):
-        divisors = []
-        for i in range(1, int(n**0.5) + 1):
-            if n % i == 0:
-                divisors.append(i)
-                if i != n // i:
-                    divisors.append(n // i)
-        return divisors
+    # def findDivisors(self, n):
+    #     divisors = []
+    #     for i in range(1, int(n**0.5) + 1):
+    #         if n % i == 0:
+    #             divisors.append(i)
+    #             if i != n // i:
+    #                 divisors.append(n // i)
+    #     return divisors
 
     def checkPrime(self, n):
         if n == 1:
@@ -569,14 +569,14 @@ class Solution:
             if val > len(nums) // 2:
                 return key
 
-    def singleNumber(self, nums: List[int]) -> int:
-        '''
-        Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
-        '''
-        result = 0
-        for n in nums:
-            result ^= n
-        return result
+    # def singleNumber(self, nums: List[int]) -> int:
+    #     '''
+    #     Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+    #     '''
+    #     result = 0
+    #     for n in nums:
+    #         result ^= n
+    #     return result
 
     def maxProfit(self, prices: List[int]) -> int:
         '''
@@ -618,58 +618,58 @@ class Solution:
             maxProfit = max(maxProfit, price - minPrice)
         return maxProfit
 
-    def pascalTriangle(self, numRows: int) -> List[List[int]]:
-        '''
-        Given an integer numRows, return the first numRows of Pascal's triangle.
+    # def pascalTriangle(self, numRows: int) -> List[List[int]]:
+    #     '''
+    #     Given an integer numRows, return the first numRows of Pascal's triangle.
 
-        In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
+    #     In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
 
-        Second Approach:
-        res = [[1]]
+    #     Second Approach:
+    #     res = [[1]]
 
-        for _ in range(numRows - 1):
-            dummy_row = [0] + res[-1] + [0]
-            row = []
+    #     for _ in range(numRows - 1):
+    #         dummy_row = [0] + res[-1] + [0]
+    #         row = []
 
-            for i in range(len(res[-1]) + 1):
-                row.append(dummy_row[i] + dummy_row[i+1])
-            res.append(row)
+    #         for i in range(len(res[-1]) + 1):
+    #             row.append(dummy_row[i] + dummy_row[i+1])
+    #         res.append(row)
 
-        return res
+    #     return res
 
-        '''
-        triangle = [[1]*(i+1) for i in range(numRows)]
-        for i in range(numRows):
-            for j in range(1, i):
-                triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j]
-        return triangle
+    #     '''
+    #     triangle = [[1]*(i+1) for i in range(numRows)]
+    #     for i in range(numRows):
+    #         for j in range(1, i):
+    #             triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j]
+    #     return triangle
 
-    def add_without_arithmetic_operators(self, a, b):
-        '''
-        Given two integers a and b, return the sum of the two integers without using the operators + and -.
-        '''
-        while b:
-            a, b = a ^ b, (a & b) << 1
-        return a
+    # def add_without_arithmetic_operators(self, a, b):
+    #     '''
+    #     Given two integers a and b, return the sum of the two integers without using the operators + and -.
+    #     '''
+    #     while b:
+    #         a, b = a ^ b, (a & b) << 1
+    #     return a
 
-    def missingNumber(self, nums):
-        '''
-        Given an array nums containing n integers in the range [0, n] without any duplicates, return the single number in the range that is missing from nums.
+    # def missingNumber(self, nums):
+    #     '''
+    #     Given an array nums containing n integers in the range [0, n] without any duplicates, return the single number in the range that is missing from nums.
 
-        Follow-up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
+    #     Follow-up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
 
-        Example 1:
-        Input: nums = [1,2,3]
+    #     Example 1:
+    #     Input: nums = [1,2,3]
 
-        Output: 0
+    #     Output: 0
 
-        res = 0
-        for i in range(len(nums)):
-            res += i - nums[i]
-        return res
-        '''
-        ct = len(nums)
-        return ((ct*(ct+1))//2) - sum(nums)
+    #     res = 0
+    #     for i in range(len(nums)):
+    #         res += i - nums[i]
+    #     return res
+    #     '''
+    #     ct = len(nums)
+    #     return ((ct*(ct+1))//2) - sum(nums)
 
     def frequencySort(self, nums):
         '''
@@ -688,92 +688,92 @@ class Solution:
             freq_dict[num] = freq_dict.get(num, 0) + 1
         return sorted(nums, key=lambda x: (freq_dict[x], -x))
     
-    def find_unique_frequency_range(self, nums):
-        '''
-        Given an array of integers nums, return the smallest range of integers k such that the frequency of each value in k is unique.
-        input: [1,6,2,2,3,2,4,3,3]
-        output: 2
-        '''
-        freq_dict = {}
-        max_count = 0
-        for num in nums:
-            freq_dict[num] = freq_dict.get(num, 0) + 1
-            if freq_dict[num] > max_count:
-                max_count = freq_dict[num]
-        return min({k for k, v in freq_dict.items() if v == max_count})                
+    # def find_unique_frequency_range(self, nums):
+    #     '''
+    #     Given an array of integers nums, return the smallest range of integers k such that the frequency of each value in k is unique.
+    #     input: [1,6,2,2,3,2,4,3,3]
+    #     output: 2
+    #     '''
+    #     freq_dict = {}
+    #     max_count = 0
+    #     for num in nums:
+    #         freq_dict[num] = freq_dict.get(num, 0) + 1
+    #         if freq_dict[num] > max_count:
+    #             max_count = freq_dict[num]
+    #     return min({k for k, v in freq_dict.items() if v == max_count})                
 
-    def hammingWeight(self, n):
-        '''
-        Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
+    # def hammingWeight(self, n):
+    #     '''
+    #     Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
 
-        res = 0
-        while n:
-            res += n & 1
-            n >>= 1
-        return res
-        '''
-        return bin(n).count('1')
+    #     res = 0
+    #     while n:
+    #         res += n & 1
+    #         n >>= 1
+    #     return res
+    #     '''
+    #     return bin(n).count('1')
 
-    def countBits(self, n):
-        '''
-        Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
+    # def countBits(self, n):
+    #     '''
+    #     Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
-        dp = [0] * (n+1)
-        offset = 1
+    #     dp = [0] * (n+1)
+    #     offset = 1
 
-        for i in range(1, n+1):
-            if offset * 2 == i:
-                offset *= 2
-            dp[i] = dp[i - offset] + 1
-        return dp
-        '''
-        return [bin(i).count('1') for i in range(n+1)]
+    #     for i in range(1, n+1):
+    #         if offset * 2 == i:
+    #             offset *= 2
+    #         dp[i] = dp[i - offset] + 1
+    #     return dp
+    #     '''
+    #     return [bin(i).count('1') for i in range(n+1)]
 
-    def reverseBits(self, n):
-        '''
-        Reverse bits of a given 32 bits unsigned integer.
-        res = 0
-        for i in range(32):
-            bit = (n >> i) & 1
-            res += (bit << (31 - i))
-        return res
-        '''
-        return int(bin(n)[2:].zfill(32)[::-1], 2)
+    # def reverseBits(self, n):
+    #     '''
+    #     Reverse bits of a given 32 bits unsigned integer.
+    #     res = 0
+    #     for i in range(32):
+    #         bit = (n >> i) & 1
+    #         res += (bit << (31 - i))
+    #     return res
+    #     '''
+    #     return int(bin(n)[2:].zfill(32)[::-1], 2)
 
-    def mySqrt(self, x: int) -> int:
-        '''
-        Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
+    # def mySqrt(self, x: int) -> int:
+    #     '''
+    #     Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
 
-        You must not use any built-in exponent function or operator.
+    #     You must not use any built-in exponent function or operator.
 
-        For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
+    #     For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
 
 
-        Example 1:
+    #     Example 1:
 
-        Input: x = 4
-        Output: 2
-        Explanation: The square root of 4 is 2, so we return 2.
-        '''
-        if x == 0:
-            return 0
+    #     Input: x = 4
+    #     Output: 2
+    #     Explanation: The square root of 4 is 2, so we return 2.
+    #     '''
+    #     if x == 0:
+    #         return 0
 
-        l, r = 0, x
-        result = 0
+    #     l, r = 0, x
+    #     result = 0
 
-        while l <= r:
-            mid = (l+r)//2
-            mid_squared = mid * mid
+    #     while l <= r:
+    #         mid = (l+r)//2
+    #         mid_squared = mid * mid
 
-            if mid_squared == x:
-                return mid
+    #         if mid_squared == x:
+    #             return mid
 
-            if mid_squared < x:
-                result = mid
-                l = mid + 1
-            else:
-                r = mid - 1
-        return result
+    #         if mid_squared < x:
+    #             result = mid
+    #             l = mid + 1
+    #         else:
+    #             r = mid - 1
+    #     return result
     
     def count_word_occurrences(self, s, word='ballon'):
         '''

@@ -37,7 +37,7 @@ from typing import Optional
 #                 list2 = list2.next
 #             current = current.next
 
-#         current.next = list1 or list2                              
+#         current.next = list1 or list2
 #         return merged_list.next
 
 # if __name__ == "__main__":
@@ -71,38 +71,38 @@ from typing import Optional
 #     print(solution.numUniqueEmails(emails))
 
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 
-class Solution:    
-    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        lst = []
-        head = ListNode()
+# class Solution:    
+#     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+#         lst = []
+#         head = ListNode()
 
-        for lt in lists:
-            current = lt
-            while current:
-                lst.append(current.val)
-                current = current.next
-        lst = sorted(lst)
-        dummy = head
-        for i in lst:
-            dummy.next = ListNode(i)
-            dummy = dummy.next
-        return head.next
+#         for lt in lists:
+#             current = lt
+#             while current:
+#                 lst.append(current.val)
+#                 current = current.next
+#         lst = sorted(lst)
+#         dummy = head
+#         for i in lst:
+#             dummy.next = ListNode(i)
+#             dummy = dummy.next
+#         return head.next
 
-if __name__ == "__main__":
-    solution = Solution()
-    # Example usage:
-    # Input: lists = [[1,4,5],[1,3,4],[2,6]]
-    list1 = ListNode(1, ListNode(4, ListNode(5)))
-    list2 = ListNode(1, ListNode(3, ListNode(4)))
-    list3 = ListNode(2, ListNode(6))
-    lists = [list1, list2, list3]
-    merged = solution.mergeKLists(lists)
-    while merged:
-        print(merged.val, end=" -> ")
-        merged = merged.next
-    print("None")
+# if __name__ == "__main__":
+#     solution = Solution()
+#     # Example usage:
+#     # Input: lists = [[1,4,5],[1,3,4],[2,6]]
+#     list1 = ListNode(1, ListNode(4, ListNode(5)))
+#     list2 = ListNode(1, ListNode(3, ListNode(4)))
+#     list3 = ListNode(2, ListNode(6))
+#     lists = [list1, list2, list3]
+#     merged = solution.mergeKLists(lists)
+#     while merged:
+#         print(merged.val, end=" -> ")
+#         merged = merged.next
+#     print("None")
