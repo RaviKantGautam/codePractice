@@ -48,9 +48,45 @@ def my_decorator(func):
         return result
     return wrapper
 
+
+def handle_exceptions(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            cls_name = args[0].__class__.__name__ if args else "UnknownClass"
+            print(f"[{cls_name}.{func.__name__}] Exception handled: {e}")
+            return None
+    return wrapper
+
 @my_decorator
 @repeat(3)
 def say_hello():
     print("Hello!")
 
-say_hello()
+
+class Calculator:
+    @handle_exceptions
+    def divide(self, a, b):
+        return a / b
+
+
+class AdvancedCalculator(Calculator):
+    @handle_exceptions
+    def square_root(self, value):
+        if value < 0:
+            raise ValueError("Cannot take square root of a negative number")
+        return value ** 0.5
+
+
+
+
+# say_hello()
+
+calc = Calculator()
+print("Division result:", calc.divide(10, 2))
+print("Division result:", calc.divide(10, 0))
+
+adv_calc = AdvancedCalculator()
+print("Square root result:", adv_calc.square_root(25))
+print("Square root result:", adv_calc.square_root(-4))

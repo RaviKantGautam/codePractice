@@ -920,11 +920,46 @@ class Solution:
             max_len = max(max_len, len(charSet))
 
         return max_len
-    
+
+    def flatten(self, nested_list):
+        '''
+        Flattens a nested list into a single list.
+        Args:
+            nested_list (list): A potentially nested list of elements.
+
+        Returns:
+            list: A flattened list containing all elements from the nested list.
+        [j for i in nested_list for j in (i if isinstance(i, list) else [i])]
+        '''
+        return [item for sublist in nested_list for item in (self.flatten(sublist) if isinstance(sublist, list) else [sublist])]
+
+    def flatten_json(self, nested_json, separator='.'):
+        out = {}
+
+        def flatten(x, name=''):
+            # If the current element is a dictionary, recurse deeper
+            if isinstance(x, dict):
+                for a in x:
+                    flatten(x[a], f"{name}{a}{separator}")
+            # If it's a list, look through individual elements (optional indices)
+            elif isinstance(x, list):
+                for i, a in enumerate(x):
+                    flatten(a, f"{name}{i}{separator}")
+            # Base case: assign value to the flattened key path
+            else:
+                out[name[:-1]] = x
+
+        flatten(nested_json)
+        return out
+
+    # https://www.geeksforgeeks.org/python/python-list-comprehension-interview-questions/
+    # https://www.geeksforgeeks.org/python/top-30-python-dictionary-interview-questions/    
 
 if __name__ == '__main__':
     sol = Solution()
-    sol.findKUnsorted([8, 2, 6, 4, 9, 11], 2)
+    # sol.findKUnsorted([8, 2, 6, 4, 9, 11], 2)
 
     # print(sol.selectionSort([64, 25, 12, 22, 11]))
+    # print(sol.flatten([[1, 2, [3, 4]], 5]))
+    print(sol.flatten_json({"user": {"profile": {"name": "Bob", "skills": ["Python", "SQL"]}}}))
 
