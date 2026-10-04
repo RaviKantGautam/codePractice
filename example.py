@@ -106,3 +106,103 @@ from typing import Optional
 #         print(merged.val, end=" -> ")
 #         merged = merged.next
 #     print("None")
+
+# class Solution:
+#     def eraseOverlapIntervals(self, intervals: list[list[int]]) -> int:
+#         '''
+#         https://leetcode.com/problems/non-overlapping-intervals/
+#         '''
+#         output = []
+#         intervals.sort(key=lambda x:x[1])
+#         overlap=0
+#         for start, end in intervals:
+#             if output and start < output[-1][-1]:                
+#                 overlap+=1
+#             else:
+#                 output.append([start, end])
+#         return overlap
+
+# if __name__ == "__main__":
+#     solution = Solution()
+#     intervals = [[1,2],[2,3],[3,4],[1,3]]
+#     print(solution.eraseOverlapIntervals(intervals))
+
+
+def mergeOverlap(arr):
+    '''
+    https://www.geeksforgeeks.org/dsa/merging-intervals/
+    '''
+    n = len(arr)
+
+    arr.sort()
+    res = []
+
+    # Checking for all possible overlaps
+    for i in range(n):
+        start = arr[i][0]
+        end = arr[i][1]
+
+        # Skipping already merged intervals
+        if res and res[-1][1] >= end:
+            continue
+
+        # Find the end of the merged range
+        for j in range(i + 1, n):
+            if arr[j][0] <= end:
+                end = max(end, arr[j][1])
+        res.append([start, end])
+    
+    return res
+
+if __name__ == "__main__":
+    arr = [[7, 8], [1, 5], [2, 4], [4, 6]]
+    res = mergeOverlap(arr)
+
+    for interval in res:
+        print(interval[0], interval[1])
+
+
+class Solution:
+    def merge(self, nums1: list[int], m: int, nums2: list[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        i,j = 0,0
+        output = []
+        if len(nums1) == 0:
+            return nums2
+        if len(nums2) == 0:
+            return nums1
+        
+        while i < m and j < n:
+            if nums1[i] == 0:
+                i+=1
+                continue
+            if nums2[j] == 0:
+                j+=1
+                continue                
+            if nums1[i] < nums2[j]:
+                output.append(nums1[i])
+                i+=1
+            else:
+                output.append(nums2[j])
+                j+=1
+        if i < m:
+            for k in range(i,m):
+                if nums1[k] != 0:
+                    output.append(nums1[k])
+        if j < n:
+            for k in range(j,n):
+                if nums2[k] != 0:
+                    output.append(nums2[k])
+        return output
+    
+
+if __name__ == "__main__":
+    solution = Solution()
+    nums1 = [1,2,3,0,0,0]
+    m = 3
+    nums2 = [2,5,6]
+    n = 3
+    merged = solution.merge(nums1, m, nums2, n)
+    print(merged)
