@@ -1,0 +1,20 @@
+# Local Terraform working directory and provider plugins.
+.terraform/
+
+# State contains resource IDs and the generated database password.
+# Do not commit it.
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# Real variable values stay on your machine.
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

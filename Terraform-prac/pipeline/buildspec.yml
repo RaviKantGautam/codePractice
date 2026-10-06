@@ -1,0 +1,39 @@
+version: 0.2
+
+# CodeBuild runs these commands against a zip of the GitHub repository.
+# Terraform replaces __DOCKERFILE_B64__ with pipeline/Dockerfile so this
+# build does not depend on a Dockerfile already living in that repository.
+#
+# privileged_mode is on for the CodeBuild project because building an image
+# needs a Docker daemon inside the build container.
+
+phases:
+  pre_build:
+    commands:
+      - echo "Log in to Amazon ECR"
+      - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" | docker login --username AWS --password-stdin "$ECR_REGISTRY"
+      - IMAGE_TAG="$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c 1-7)"
+      - echo "Image tag is $IMAGE_TAG"
+      - echo "__DOCKERFILE_B64__" | base64 -d > Dockerfile.aws
+      - |
+        if ! docker info >/dev/null 2>&1; then
+          nohup dockerd >/tmp/dockerd.log 2>&1 &
+          timeout 30 sh -c 'until docker info >/dev/null 2>&1; do sleep 1; done'
+        fi
+
+  build:
+    commands:
+      - echo "Build and push the Django image"
+      - docker build -f Dockerfile.aws -t "$ECR_REPOSITORY_URI:$IMAGE_TAG" -t "$ECR_REPOSITORY_URI:latest" .
+      - docker push "$ECR_REPOSITORY_URI:$IMAGE_TAG"
+      - docker push "$ECR_REPOSITORY_URI:latest"
+
+  post_build:
+    commands:
+      - echo "Write the file the ECS deploy action reads"
+      - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$ECR_REPOSITORY_URI:$IMAGE_TAG" > imagedefinitions.json
+      - cat imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json

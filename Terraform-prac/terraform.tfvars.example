@@ -1,0 +1,10 @@
+# Copy this file to terraform.tfvars and edit it.
+# terraform.tfvars is gitignored because it is your local configuration.
+#
+#   cp terraform.tfvars.example terraform.tfvars
+
+aws_region        = "ap-south-1"
+project_name      = "assettracker"
+environment       = "dev"
+github_repository = "RaviKantGautam/assettracker"
+github_branch     = "master"
