@@ -171,6 +171,7 @@ class Solution:
         '''
         k = k % len(nums)
         nums[:] = nums[-k:] + nums[:-k]
+        return nums
 
     def plusOne(self, digits: List[int]) -> List[int]:
         '''
@@ -528,18 +529,6 @@ class Solution:
             s[l], s[r] = s[r], s[l]
             l += 1
             r -= 1
-
-    def binarySearch(self, arr, target):
-        low, high = 0, len(arr) - 1
-        while low <= high:
-            mid = (low + high) // 2
-            if arr[mid] == target:
-                return mid
-            elif arr[mid] < target:
-                low = mid + 1
-            else:
-                high = mid - 1
-        return -1
 
     def moveZeroes(self, nums: List[int]) -> None:
         '''

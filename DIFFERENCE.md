@@ -57,7 +57,7 @@ Here are the main reasons list comprehensions execute faster than traditional fo
 - **Memory pre-allocation** List comprehensions allocate memory for the entire resulting list upfront whenever possible, preventing the performance hit of dynamically resizing the list as it grows.
 - **C-level implementation** Because Python's underlying list operations are written in C, the internal execution engine handles the looping logic directly, minimizing explicit loop control statements.
 
-**Q.9** If access token is expired but we still have refresh token to generate new access token but during the creation of new access token, API got high request rate and suddenly all the user got logged out of the system? How to prevent this this issue in python (take any web framework django, flask or fastapi)?
+**Q.9** **If access token is expired but we still have refresh token to generate new access token but during the creation of new access token, API got high request rate and suddenly all the user got logged out of the system? How to prevent this this issue in python (take any web framework django, flask or fastapi)?**
 
 Answer:
 
@@ -127,5 +127,4 @@ If your API is genuinely experiencing a high request rate (HTTP 429 Too Many Req
 
 Q.10 What is the difference between thread and process?
 
-[https://www.codesy.tech/interview-prep/5-os-interview-questions-resources
-](https://www.codesy.tech/interview-prep/5-os-interview-questions-resources)
+<https://www.codesy.tech/interview-prep/5-os-interview-questions-resources>

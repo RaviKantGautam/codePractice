@@ -1,5 +1,8 @@
 class MyMeta(type):
-    # A metaclass is the class used to create and control other classes. Just as a class defines how objects are created, a metaclass defines how classes are created. Python’s default metaclass is type. Custom metaclasses can intercept class creation to modify classes, enforce rules, register classes, or generate class-level behavior.
+    # A metaclass is the class used to create and control other classes. 
+    # Just as a class defines how objects are created, a metaclass defines how classes are created. 
+    # Python’s default metaclass is type. 
+    # Custom metaclasses can intercept class creation to modify classes, enforce rules, register classes, or generate class-level behavior.
     def __new__(cls, name, bases, attrs):
         attrs['new_attribute'] = 'Hello, World!'
         return super().__new__(cls, name, bases, attrs)
