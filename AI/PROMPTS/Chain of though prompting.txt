@@ -1,0 +1,58 @@
+Question: A chemist has two acid solutions. Solution A is 20 percent acid and Solution B is 50 percent acid. He needs to create a 12-liter mixture that is 40 percent acid. How many liters of each solution should he use?
+
+Answer:-
+Let x be the liters of Solution A and y be the liters of Solution B.
+Total volume constraint: x + y = 12. Therefore, x = 12 - y.
+Total acid content constraint: 0.20x + 0.50y = 0.40 * 12.
+Simplify the acid equation: 0.20x + 0.50y = 4.8.
+Multiply the entire equation by 10 to remove decimals: 2x + 5y = 48.
+Substitute x = 12 - y into the new equation: 2(12 - y) + 5y = 48.
+Expand the brackets: 24 - 2y + 5y = 48.
+Combine like terms: 24 + 3y = 48.
+Subtract 24 from both sides: 3y = 24.
+Solve for y: y = 8.
+Calculate x: x = 12 - 8 = 4.
+Answer: Use 4 liters of Solution A and 8 liters of Solution B.
+
+
+Question: An investor puts a total of 10,000 dollars into two accounts. Account A earns 4.5 percent annual interest, and Account B earns 7 percent annual interest. After one year, the total interest earned is 630 dollars. How much was invested in Account A?
+
+Answer:
+Let x be the amount in Account A and y be the amount in Account B.
+Total investment: x + y = 10,000. Therefore, y = 10,000 - x.
+Total interest equation: 0.045x + 0.07y = 630.
+Multiply the entire equation by 1,000 to remove decimals: 45x + 70y = 630,000.
+Substitute y: 45x + 70(10,000 - x) = 630,000.
+Expand the brackets: 45x + 700,000 - 70x = 630,000.
+Combine like terms: -25x + 700,000 = 630,000.
+Subtract 700,000 from both sides: -25x = -70,000.
+Divide by -25: x = 2,800.
+Answer: The amount invested in Account A was 2,800 dollars.
+
+
+Question: A food scientist is mixing two types of grain. Grain X contains 10 percent protein and Grain Y contains 18 percent protein. How many kilograms of Grain X must be mixed with Grain Y to create a 20-kilogram batch that contains 15.2 percent protein?
+
+Step-by-Step Solution:
+Let x be the kg of Grain X and y be the kg of Grain Y.
+Total weight: x + y = 20. Therefore, y = 20 - x.
+Protein content equation: 0.10x + 0.18y = 0.152 * 20.
+Calculate the right side: 0.152 * 20 = 3.04.
+Equation: 0.10x + 0.18y = 3.04.
+Multiply the entire equation by 100 to remove decimals: 10x + 18y = 304.
+Substitute y: 10x + 18(20 - x) = 304.
+Expand the brackets: 10x + 360 - 18x = 304.
+Combine like terms: -8x + 360 = 304.
+Subtract 360 from both sides: -8x = -56.
+Divide by -8: x = 7.
+Answer: 7 kilograms of Grain X must be used.
+
+Question:-A technician has a fuel tank that is 2/3 full. After using 15 gallons for a test run, the tank is now 1/4 full. What is the total capacity of the fuel tank in gallons?
+(36)
+
+Question:-A farmer has only cows and hens on his farm, with a total of 30 animals. Altogether, these animals have 74 legs. How many of them are hens?
+(23)
+Question:- A coffee shop owner wants to create a special 50-kilogram blend of coffee. He mixes "Gold Roast" which costs 12 dollars per kg with "Silver Roast" which costs 8 dollars per kg. If the final blend is to be sold for 9 dollars per kg, how many kilograms of each roast should he use?
+(Use 12.5 kilograms of Gold Roast and 37.5 kilograms of Silver Roast.)
+
+
+### ANSWERS FOR TESTING QUESTIONS ARE IN BRACKET.

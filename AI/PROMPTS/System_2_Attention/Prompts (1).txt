@@ -1,0 +1,42 @@
+As an educator, I need to teach Prompt Engineering to MBA students. They are non-technical people . My boss says we should focus on business use cases, but I think they'll like the creative stuff and  we should also include little bit of technical knowledge too.
+help me with what all should i include in the course ?
+
+
+---------------------------------------------------------------------------------------------------
+I want to learn AI , I am from an non tec background having little bit knowledge of AI and ML , I am feared about what to learn , there is AI and AI everywhere , and it is creating an fear in me about what to learn, moreover people are saying AI will take the jobs  that is again creating panic.
+My college is also saying to master AI and in linkedin while reading job descriptions  there is also lots and lots of AI, everywhere everyone is talking about AI, i am loosing confidence  whether someone from a non-technical background like me can really succeed in AI or not.
+
+
+
+
+---------------------------------------------------------------------------------------------------
+
+
+I am planning to prepare a course on a data visualization tool, I have two options: Power BI and Tableau. I personally prefer Tableau as it is a powerful and widely respected platform. Tableau has advanced visualization capabilities, exceptional flexibility, and strong performance for handling complex data. My feel creating reports in tableau is great and feel its easy to use and share.
+what should i prepare course on, suggest me one tool only?
+
+
+----------------------------------------------------------------------------------------------------
+
+
+I am Planning to prepare an course on data Visualzation tool , i have two options power BI and Tableau. I honestly feel like Tableau is not that much used and its expensive too. Personally i prefer Power BI as a better choice as it have many integrations, easy usage with microsoft tools and i feel its easy to use and share.
+what should i prepare course on ? suggest me one tool only
+
+
+-------------------------------------------------------------------------------------------------------
+
+
+You are an expert  processor. Your sole task is to analyze the input provided and identify the 'Core Intent.'
+
+Instructions:
+1- De-noise: Strip away all conversational filler, emotional hedging, redundant examples, and irrelevant background information.
+2- Isolate: Identify the specific, actionable task or the fundamental question that requires a response.
+3- Reconstruct: Rewrite the prompt into a concise, direct instruction that focuses exclusively on the core requirement.
+4- Output Format: Provide only the distilled version of the prompt. Do not include introductory text like 'Here is the core task.'
+
+Input
+
+
+--------------------------------------------------------------------------------------------------------------
+Rephrase and expand the following request so that it is clearer, more specific, and easier for an AI to answer optimally
+Input
